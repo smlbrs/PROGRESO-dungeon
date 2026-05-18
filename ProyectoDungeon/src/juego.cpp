@@ -29,6 +29,8 @@ void juego::ejecutar() {
 
     std::cout << "\nVidas: " << player.getVidas() << std::endl;
 
+    std::cout << "Puntos: " << player.getPuntos() << std::endl;
+
     inventario.mostrar();
 
         std::cout << "W para mover arriba \n" << std::endl;
@@ -58,6 +60,7 @@ void juego::ejecutar() {
 
     if(celda == 'D') {
         if(inventario.tieneObjeto("Llave")) {
+    
             std::cout << "Puerta abierta\n";
         }
         else {
@@ -68,11 +71,13 @@ void juego::ejecutar() {
 
     if(celda == 'K') {
         inventario.agregarObjeto("Llave");
+         player.sumarPuntos(50);
         sala.setCelda(nuevoY, nuevoX, '.');
     }
 
     if(celda == 'V') {
         player.curar();
+        player.sumarPuntos(20);
 
         sala.setCelda(nuevoY, nuevoX, '.');
 
@@ -98,11 +103,7 @@ void juego::ejecutar() {
             if(sala.getCelda(nuevoY, nuevoX) == 'K') {
             inventario.agregarObjeto("Llave");
             sala.setCelda(nuevoY, nuevoX, '.');
-
-
         }  
-    
-
             player.mover(
                 nuevoX - player.getX(),
                 nuevoY - player.getY()
