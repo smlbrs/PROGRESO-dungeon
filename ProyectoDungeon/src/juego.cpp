@@ -3,6 +3,7 @@
 #include <fstream>
 
 juego::juego() {
+    numeroSala = 1;
 }
 
 void juego::ejecutar() {
@@ -78,6 +79,18 @@ void juego::ejecutar() {
 
     if(celda == 'D') {
         if(inventario.tieneObjeto("Llave")) {
+            if(numeroSala == 1) {
+                numeroSala = 2;
+
+                sala.cargarSala2();
+
+                player.mover(
+                    1 - player.getX(),
+                    1 - player.getY()
+                );
+
+                continue;
+            } else {    
                 std::cout << "\nGANASTE\n";
 
         std::ofstream archivo("record.txt");
@@ -86,6 +99,7 @@ void juego::ejecutar() {
         archivo.close();
 
         break;
+    }
     }
     else {
             std::cout << "Necesitas una llave\n";
