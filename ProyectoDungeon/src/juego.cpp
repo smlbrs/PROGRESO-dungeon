@@ -96,8 +96,15 @@ void juego::ejecutar() {
         std::cout<<"\nTe curaste\n";
     }
 
+    if(celda == 'T') {
+    player.sumarPuntos(30);
+
+    sala.setCelda(nuevoY, nuevoX, '.');
+
+    std::cout << "\nTesoro recogido\n";
+}
+
     if(celda == 'E') {
-        
         player.perderVida();
 
         std::cout<<"\n te atacaron \n";
