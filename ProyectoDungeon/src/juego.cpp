@@ -1,5 +1,6 @@
 #include "../include/juego.h"
 #include <iostream>
+#include <fstream>
 
 juego::juego() {
 }
@@ -48,6 +49,11 @@ void juego::ejecutar() {
         if(tecla == 'a') nuevoX--;
         if(tecla == 'd') nuevoX++;
 
+        if(tecla == 'W') nuevoY--;
+        if(tecla == 'S') nuevoY++;
+        if(tecla == 'A') nuevoX--;
+        if(tecla == 'D') nuevoX++;
+
         if(
         nuevoX >= 0 && nuevoX < 10 &&
         nuevoY >= 0 && nuevoY < 10
@@ -60,10 +66,16 @@ void juego::ejecutar() {
 
     if(celda == 'D') {
         if(inventario.tieneObjeto("Llave")) {
-    
-            std::cout << "Puerta abierta\n";
-        }
-        else {
+                std::cout << "\nGANASTE\n";
+
+        std::ofstream archivo("record.txt");
+        archivo << "Puntaje: " << player.getPuntos();
+
+        archivo.close();
+
+        break;
+    }
+    else {
             std::cout << "Necesitas una llave\n";
             continue;
         }
@@ -95,6 +107,23 @@ void juego::ejecutar() {
     break;
     }
 }
+    if(celda == 'J') {
+
+    player.perderVida();
+    player.perderVida();
+
+    std::cout << "\nEl jefe te golpeo\n";
+
+    if(player.getVidas() <= 0) {
+
+        std::cout << "\nMORISTE JAJA\n";
+
+        break;
+    }
+    player.sumarPuntos(100);
+    sala.setCelda(nuevoY, nuevoX, '.');
+}
+    
     player.mover(
         nuevoX - player.getX(),
         nuevoY - player.getY()
@@ -111,3 +140,4 @@ void juego::ejecutar() {
         }
     }
 }
+
