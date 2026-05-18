@@ -1,24 +1,27 @@
-#include "../include/juego.h"
-#include <iostream>
+#include <SFML/Graphics.hpp>
 
 int main() {
 
-    int opcion;
-    std::cout << "==== DUNGEON ====\n";
-    std::cout << "1. Jugar\n";
-    std::cout << "2. Salir\n";
-    std::cout << "Selecciona una opcion: ";
+    sf::RenderWindow window(
+        sf::VideoMode(800, 600),
+        "Dungeon Game"
+    );
 
-    std::cin >> opcion;
+    while(window.isOpen()) {
 
-    if(opcion == 1) {
+        sf::Event event;
 
-        juego partida;
-        partida.ejecutar();
-    }
-    else {
+        while(window.pollEvent(event)) {
 
-        std::cout << "chau...\n";
+            if(event.type == sf::Event::Closed) {
+
+                window.close();
+            }
+        }
+
+        window.clear();
+
+        window.display();
     }
 
     return 0;
