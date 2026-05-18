@@ -6,6 +6,7 @@ private:
     int x;
     int y;
     int vidas;
+    int puntos;
 
 public:
     jugador();
@@ -17,6 +18,9 @@ public:
     void mover(int dx, int dy);
     void perderVida();
     void curar();
+    int getPuntos();
+
+    void sumarPuntos(int cantidad);
 };
 
 #endif  
