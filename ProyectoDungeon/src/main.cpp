@@ -3,13 +3,23 @@
 
 int main() {
 
-    std::cout << "Inicio main\n";
+    int opcion;
+    std::cout << "==== DUNGEON ====\n";
+    std::cout << "1. Jugar\n";
+    std::cout << "2. Salir\n";
+    std::cout << "Selecciona una opcion: ";
 
-    juego partida;
+    std::cin >> opcion;
 
-    std::cout << "Objeto creado\n";
+    if(opcion == 1) {
 
-    partida.ejecutar();
+        juego partida;
+        partida.ejecutar();
+    }
+    else {
+
+        std::cout << "chau...\n";
+    }
 
     return 0;
 }
