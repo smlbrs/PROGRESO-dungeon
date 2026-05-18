@@ -111,6 +111,7 @@ void juego::ejecutar() {
 
     player.perderVida();
     player.perderVida();
+    player.perderVida();
 
     std::cout << "\nEl jefe te golpeo\n";
 
