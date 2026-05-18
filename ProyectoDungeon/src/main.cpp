@@ -25,18 +25,51 @@ int main() {
         sf::Vector2f(50.f, 50.f)
     );
 
+    sf::RectangleShape jugador(
+        sf::Vector2f(40.f, 40.f)
+    );
+
+    jugador.setFillColor(
+        sf::Color::Red  
+    );
+
+    int jugadorX = 1;
+    int jugadorY = 1;
+
     while(window.isOpen()) {
 
         sf::Event event;
 
         while(window.pollEvent(event)) {
 
-            if(event.type == sf::Event::Closed) {
+            if(event.type == sf::Event::KeyPressed) {
 
-                window.close();
-            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+            if(mapa[jugadorY - 1][jugadorX]) {
+
+            jugadorY--;
         }
+    }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            if(mapa[jugadorY + 1][jugadorX]) {
 
+        jugadorY++;
+    }
+}
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+            if(mapa[jugadorY][jugadorX - 1]) {
+
+        jugadorX--;
+    }
+}
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            if(mapa[jugadorY][jugadorX + 1]) {
+
+        jugadorX++;
+    }
+}
+        }
+    }
         window.clear();
 
         for(int i = 0; i < 10; i++) {
@@ -64,6 +97,13 @@ int main() {
                 window.draw(bloque);
             }
         }
+
+        jugador.setPosition(
+            jugadorX * 50.f + 5.f,
+            jugadorY * 50.f + 5.f
+        );
+
+        window.draw(jugador);
 
         window.display();
     }
