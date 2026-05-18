@@ -1,17 +1,29 @@
 #include <SFML/Graphics.hpp>
 
+char mapa[10][10] = {
+
+    {'#','#','#','#','#','#','#','#','#','#'},
+    {'#','.','.','.','.','.','.','.','.','#'},
+    {'#','.','.','.','#','.','.','.','.','#'},
+    {'#','.','.','.','#','.','.','.','.','#'},
+    {'#','.','.','.','#','.','.','.','.','#'},
+    {'#','.','.','.','.','.','.','.','.','#'},
+    {'#','.','.','.','.','.','.','.','.','#'},
+    {'#','.','.','.','.','.','.','.','.','#'},
+    {'#','.','.','.','.','.','.','.','.','#'},
+    {'#','#','#','#','#','#','#','#','#','#'}
+};
+
 int main() {
 
     sf::RenderWindow window(
-        sf::VideoMode(800, 600),
+        sf::VideoMode(500, 500),
         "Dungeon Game"
     );
 
-    sf::RectangleShape jugador(
+    sf::RectangleShape bloque(
         sf::Vector2f(50.f, 50.f)
     );
-
-    jugador.setPosition(100.f, 100.f);
 
     while(window.isOpen()) {
 
@@ -25,25 +37,33 @@ int main() {
             }
         }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            jugador.move(0.f, -0.2f);
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            jugador.move(0.f, 0.2f);
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            jugador.move(-0.2f, 0.f);
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            jugador.move(0.2f, 0.f);
-        }
-
         window.clear();
 
-        window.draw(jugador);
+        for(int i = 0; i < 10; i++) {
+
+            for(int j = 0; j < 10; j++) {
+
+                bloque.setPosition(
+                    j * 50.f,
+                    i * 50.f
+                );
+
+                if(mapa[i][j] == '#') {
+
+                    bloque.setFillColor(
+                        sf::Color::Blue
+                    );
+                }
+                else {
+
+                    bloque.setFillColor(
+                        sf::Color::Black
+                    );
+                }
+
+                window.draw(bloque);
+            }
+        }
 
         window.display();
     }
