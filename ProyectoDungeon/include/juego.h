@@ -10,6 +10,7 @@ private:
     jugador player;
     Sala sala;
     Inventario inventario;
+    int numeroSala;
 
 public:
     juego();
