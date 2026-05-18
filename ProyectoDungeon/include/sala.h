@@ -12,6 +12,8 @@ public:
 
     char getCelda(int fila, int columna);
     void setCelda(int fila, int columna, char valor);
+
+    void cargarSala2();
 };
 
 #endif
