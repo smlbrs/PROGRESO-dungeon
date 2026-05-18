@@ -28,6 +28,18 @@ void juego::ejecutar() {
         std::cout << std::endl;
     }
 
+    std::cout << "-------------------------" << std::endl;
+    std::cout << "| P = jugador  J = jefe |" << std::endl;
+    std::cout << "| V = cura   T = tesoro |" << std::endl;
+    std::cout << "| P = puerta  K = llave |" << std::endl;
+    std::cout << "-------------------------" << std::endl;
+
+    std::cout << "----------------------------" << std::endl;
+    std::cout << "| E = Enemigos             |" << std::endl;
+    std::cout << "| !O = Ogro  !X = Mounstro |" << std::endl;
+    std::cout << "| !Z = Zombie              |" << std::endl;
+    std::cout << "----------------------------" << std::endl;
+
     std::cout << "\nVidas: " << player.getVidas() << std::endl;
 
     std::cout << "Puntos: " << player.getPuntos() << std::endl;
@@ -104,16 +116,24 @@ void juego::ejecutar() {
     std::cout << "\nTesoro recogido\n";
 }
 
-    if(celda == 'E') {
-        player.perderVida();
+    if(
+    celda == 'E' ||
+    celda == 'O' ||
+    celda == 'X' ||
+    celda == 'Z'
+) {
+    player.perderVida();
 
-        std::cout<<"\n te atacaron \n";
+    std::cout << "\nUn enemigo te ataco\n";
 
-        if(player.getVidas() <= 0) {
-            std::cout<<"perdiste burro";
-    break;
+    if(player.getVidas() <= 0) {
+        std::cout << "\nGAME OVER\n";
+        break;
     }
+    player.sumarPuntos(40);
+    sala.setCelda(nuevoY, nuevoX, '.');
 }
+
     if(celda == 'J') {
 
     player.perderVida();
