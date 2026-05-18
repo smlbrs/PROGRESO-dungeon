@@ -8,6 +8,7 @@ jugador::jugador() {
     x = 1;
     y = 1;
     vidas = 3;
+    puntos = 0;
 }
 
 int jugador::getX() {
@@ -20,6 +21,11 @@ int jugador::getY() {
 
 int jugador::getVidas() {
     return vidas;
+}
+
+int jugador::getPuntos() {
+
+    return puntos;
 }
 
 void jugador::mover(int dx, int dy) {
@@ -38,4 +44,9 @@ void jugador::curar() {
 
         vidas++;
     }
+}
+
+void jugador::sumarPuntos(int cantidad) {
+
+    puntos += cantidad;
 }
