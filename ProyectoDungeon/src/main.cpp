@@ -1,20 +1,12 @@
 #include <SFML/Graphics.hpp>
 
-char mapa[10][10] = {
-
-    {'#','#','#','#','#','#','#','#','#','#'},
-    {'#','.','.','.','.','.','.','.','.','#'},
-    {'#','.','.','.','#','.','.','.','.','#'},
-    {'#','.','.','.','#','.','.','.','.','#'},
-    {'#','.','.','.','#','.','.','.','.','#'},
-    {'#','.','.','.','.','.','.','.','.','#'},
-    {'#','.','.','.','.','.','.','.','.','#'},
-    {'#','.','.','.','.','.','.','.','.','#'},
-    {'#','.','.','.','.','.','.','.','.','#'},
-    {'#','#','#','#','#','#','#','#','#','#'}
-};
+#include "../include/jugador.h"
+#include "../include/sala.h"
 
 int main() {
+
+    Sala sala;
+    jugador player;
 
     sf::RenderWindow window(
         sf::VideoMode(500, 500),
@@ -25,16 +17,13 @@ int main() {
         sf::Vector2f(50.f, 50.f)
     );
 
-    sf::RectangleShape jugador(
+    sf::RectangleShape jugadorShape(
         sf::Vector2f(40.f, 40.f)
     );
 
-    jugador.setFillColor(
-        sf::Color::Red  
+    jugadorShape.setFillColor(
+        sf::Color::Red
     );
-
-    int jugadorX = 1;
-    int jugadorY = 1;
 
     while(window.isOpen()) {
 
@@ -42,38 +31,72 @@ int main() {
 
         while(window.pollEvent(event)) {
 
+            if(event.type == sf::Event::Closed) {
+
+                window.close();
+            }
+
             if(event.type == sf::Event::KeyPressed) {
 
-            if(event.key.code == sf::Keyboard::Escape) {
-        window.close();
-    }
+                if(event.key.code == sf::Keyboard::Escape) {
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            if(mapa[jugadorY - 1][jugadorX] != '#') {
+                    window.close();
+                }
 
-            jugadorY--;
+                if(event.key.code == sf::Keyboard::W) {
+
+                    if(
+                        sala.getCelda(
+                            player.getY() - 1,
+                            player.getX()
+                        ) != '#'
+                    ) {
+
+                        player.mover(0, -1);
+                    }
+                }
+
+                if(event.key.code == sf::Keyboard::S) {
+
+                    if(
+                        sala.getCelda(
+                            player.getY() + 1,
+                            player.getX()
+                        ) != '#'
+                    ) {
+
+                        player.mover(0, 1);
+                    }
+                }
+
+                if(event.key.code == sf::Keyboard::A) {
+
+                    if(
+                        sala.getCelda(
+                            player.getY(),
+                            player.getX() - 1
+                        ) != '#'
+                    ) {
+
+                        player.mover(-1, 0);
+                    }
+                }
+
+                if(event.key.code == sf::Keyboard::D) {
+
+                    if(
+                        sala.getCelda(
+                            player.getY(),
+                            player.getX() + 1
+                        ) != '#'
+                    ) {
+
+                        player.mover(1, 0);
+                    }
+                }
+            }
         }
-    }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            if(mapa[jugadorY + 1][jugadorX] != '#') {
 
-        jugadorY++;
-    }
-}
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            if(mapa[jugadorY][jugadorX - 1] != '#') {
-
-        jugadorX--;
-    }
-}
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            if(mapa[jugadorY][jugadorX + 1] != '#') {
-
-        jugadorX++;
-    }
-}
-        }
-    }
         window.clear();
 
         for(int i = 0; i < 10; i++) {
@@ -85,7 +108,7 @@ int main() {
                     i * 50.f
                 );
 
-                if(mapa[i][j] == '#') {
+                if(sala.getCelda(i, j) == '#') {
 
                     bloque.setFillColor(
                         sf::Color::Blue
@@ -102,12 +125,12 @@ int main() {
             }
         }
 
-        jugador.setPosition(
-            jugadorX * 50.f + 5.f,
-            jugadorY * 50.f + 5.f
+        jugadorShape.setPosition(
+            player.getX() * 50.f + 5.f,
+            player.getY() * 50.f + 5.f
         );
 
-        window.draw(jugador);
+        window.draw(jugadorShape);
 
         window.display();
     }
