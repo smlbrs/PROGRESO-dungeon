@@ -23,8 +23,8 @@ int main()
     );
 
     jugadorSprite.setScale(
-        0.3f,
-        0.3f
+        1.f,
+        1.f
     );
 
     sf::RenderWindow window(
@@ -169,8 +169,8 @@ int main()
         }
 
         jugadorSprite.setPosition(
-            player.getX() * 50.f + 5.f,
-            player.getY() * 50.f + 5.f
+            player.getX() * 50.f - 7.f,
+            player.getY() * 50.f - 7.f 
         );
 
         window.draw(jugadorSprite);
