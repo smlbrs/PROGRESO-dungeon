@@ -3,93 +3,95 @@
 #include "../include/jugador.h"
 #include "../include/sala.h"
 
-int main() {
+int main()
+{
 
     Sala sala;
     jugador player;
 
     sf::RenderWindow window(
         sf::VideoMode(500, 500),
-        "Dungeon Game"
-    );
+        "Dungeon Game");
 
     sf::RectangleShape bloque(
-        sf::Vector2f(50.f, 50.f)
-    );
+        sf::Vector2f(50.f, 50.f));
 
     sf::RectangleShape jugadorShape(
-        sf::Vector2f(40.f, 40.f)
-    );
+        sf::Vector2f(40.f, 40.f));
 
     jugadorShape.setFillColor(
-        sf::Color::Red
-    );
+        sf::Color::Red);
 
-    while(window.isOpen()) {
+    while (window.isOpen())
+    {
 
         sf::Event event;
 
-        while(window.pollEvent(event)) {
+        while (window.pollEvent(event))
+        {
 
-            if(event.type == sf::Event::Closed) {
+            if (event.type == sf::Event::Closed)
+            {
 
                 window.close();
             }
 
-            if(event.type == sf::Event::KeyPressed) {
+            if (event.type == sf::Event::KeyPressed)
+            {
 
-                if(event.key.code == sf::Keyboard::Escape) {
+                if (event.key.code == sf::Keyboard::Escape)
+                {
 
                     window.close();
                 }
 
-                if(event.key.code == sf::Keyboard::W) {
+                if (event.key.code == sf::Keyboard::W)
+                {
 
-                    if(
+                    if (
                         sala.getCelda(
                             player.getY() - 1,
-                            player.getX()
-                        ) != '#'
-                    ) {
+                            player.getX()) != '#')
+                    {
 
                         player.mover(0, -1);
                     }
                 }
 
-                if(event.key.code == sf::Keyboard::S) {
+                if (event.key.code == sf::Keyboard::S)
+                {
 
-                    if(
+                    if (
                         sala.getCelda(
                             player.getY() + 1,
-                            player.getX()
-                        ) != '#'
-                    ) {
+                            player.getX()) != '#')
+                    {
 
                         player.mover(0, 1);
                     }
                 }
 
-                if(event.key.code == sf::Keyboard::A) {
+                if (event.key.code == sf::Keyboard::A)
+                {
 
-                    if(
+                    if (
                         sala.getCelda(
                             player.getY(),
-                            player.getX() - 1
-                        ) != '#'
-                    ) {
+                            player.getX() - 1) != '#')
+                    {
 
                         player.mover(-1, 0);
                     }
                 }
 
-                if(event.key.code == sf::Keyboard::D) {
+                if (event.key.code == sf::Keyboard::D)
+                {
 
-                    if(
+                    if (
                         sala.getCelda(
                             player.getY(),
-                            player.getX() + 1
-                        ) != '#'
-                    ) {
+                            player.getX() + 1) != '#')
+                    {
 
                         player.mover(1, 0);
                     }
@@ -99,26 +101,58 @@ int main() {
 
         window.clear();
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++)
+        {
 
-            for(int j = 0; j < 10; j++) {
+            for (int j = 0; j < 10; j++)
+            {
 
                 bloque.setPosition(
                     j * 50.f,
-                    i * 50.f
-                );
+                    i * 50.f);
 
-                if(sala.getCelda(i, j) == '#') {
+                char celda = sala.getCelda(i, j);
+
+                if (celda == '#')
+                {
 
                     bloque.setFillColor(
-                        sf::Color::Blue
-                    );
+                        sf::Color::Blue);
                 }
-                else {
+
+                else if (celda == 'K')
+                {
 
                     bloque.setFillColor(
-                        sf::Color::Black
-                    );
+                        sf::Color::Yellow);
+                }
+
+                else if (celda == 'H')
+                {
+
+                    bloque.setFillColor(
+                        sf::Color::Green);
+                }
+
+                else if (celda == 'D')
+                {
+
+                    bloque.setFillColor(
+                        sf::Color(139, 69, 19));
+                }
+
+                else if (celda == 'E')
+                {
+
+                    bloque.setFillColor(
+                        sf::Color::Magenta);
+                }
+
+                else
+                {
+
+                    bloque.setFillColor(
+                        sf::Color::Black);
                 }
 
                 window.draw(bloque);
@@ -127,8 +161,7 @@ int main() {
 
         jugadorShape.setPosition(
             player.getX() * 50.f + 5.f,
-            player.getY() * 50.f + 5.f
-        );
+            player.getY() * 50.f + 5.f);
 
         window.draw(jugadorShape);
 
