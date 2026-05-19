@@ -44,26 +44,30 @@ int main() {
 
             if(event.type == sf::Event::KeyPressed) {
 
+            if(event.key.code == sf::Keyboard::Escape) {
+        window.close();
+    }
+
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            if(mapa[jugadorY - 1][jugadorX]) {
+            if(mapa[jugadorY - 1][jugadorX] != '#') {
 
             jugadorY--;
         }
     }
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            if(mapa[jugadorY + 1][jugadorX]) {
+            if(mapa[jugadorY + 1][jugadorX] != '#') {
 
         jugadorY++;
     }
 }
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            if(mapa[jugadorY][jugadorX - 1]) {
+            if(mapa[jugadorY][jugadorX - 1] != '#') {
 
         jugadorX--;
     }
 }
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            if(mapa[jugadorY][jugadorX + 1]) {
+            if(mapa[jugadorY][jugadorX + 1] != '#') {
 
         jugadorX++;
     }
