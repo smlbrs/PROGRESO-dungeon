@@ -171,7 +171,7 @@ juego::juego()
         sf::Color::Red);
 
     textoGameOver.setString(
-        "GAME OVER");
+        "GAME OVER\nESC para salir");
 
     textoGameOver.setPosition(
         150.f,
@@ -185,7 +185,7 @@ juego::juego()
         sf::Color::Green);
 
     textoVictoria.setString(
-        "VICTORIA");
+        "VICTORIA\nESC para salir");
 
     textoVictoria.setPosition(
         150.f,
