@@ -32,6 +32,46 @@ private:
     sf::Text textoPuntos;
 
     sf::Text textoVidas;
+
+    sf::Texture texturaOgro;
+
+    sf::Sprite OgroSprite;
+
+    sf::Texture texturaKey;
+
+    sf::Sprite keySprite;   
+
+    sf::Texture texturaDoor;
+
+    sf::Sprite doorSprite;
+
+    sf::Texture texturaBoss;
+
+    sf::Sprite bossSprite;
+
+    sf::Texture texturaPotion;
+
+    sf::Sprite potionSprite;
+
+    sf::Texture texturaTreasure;
+
+    sf::Sprite treasureSprite;
+
+    sf::Texture texturaWall;
+
+    sf::Sprite wallSprite;
+
+    sf::Texture texturaZombie;
+
+    sf::Sprite zombieSprite;
+
+    sf::Texture texturaSkeleton;
+
+    sf::Sprite skeletonSprite;
+
+    sf::Texture texturaMonster;
+
+    sf::Sprite monsterSprite;
 public:
 
     juego();

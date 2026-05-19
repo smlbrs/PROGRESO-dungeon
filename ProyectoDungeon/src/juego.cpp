@@ -2,75 +2,171 @@
 #include <fstream>
 
 juego::juego()
-: window(
-    sf::VideoMode(500, 500),
-    "Dungeon Game"
-),
-bloque(sf::Vector2f(50.f, 50.f))
+    : window(
+          sf::VideoMode(500, 500),
+          "Dungeon Game"),
+      bloque(sf::Vector2f(50.f, 50.f))
 {
 
     numeroSala = 1;
 
     texturaJugador.loadFromFile(
-        "assets/player.png"
-    );
+        "assets/player.png");
 
     jugadorSprite.setTexture(
-        texturaJugador
-    );
+        texturaJugador);
 
     jugadorSprite.setScale(
         1.f,
-        1.f
-    );
+        1.f);
+
+    texturaOgro.loadFromFile(
+        "assets/enemy.png");
+
+    OgroSprite.setTexture(
+        texturaOgro);
+
+    OgroSprite.setScale(
+        1.f,
+        1.f);
+
+    texturaBoss.loadFromFile(
+        "assets/boss.png");
+
+    bossSprite.setTexture(
+        texturaBoss);
+
+    bossSprite.setScale(
+        1.f,
+        1.f);
+
+    texturaKey.loadFromFile(
+        "assets/key.png");
+
+    keySprite.setTexture(
+        texturaKey);
+
+    keySprite.setScale(
+        1.f,
+        1.f);
+
+    texturaDoor.loadFromFile(
+        "assets/door.png");
+
+    doorSprite.setTexture(
+        texturaDoor);
+
+    doorSprite.setScale(
+        1.f,
+        1.f);
+
+    texturaPotion.loadFromFile(
+        "assets/potion.png");
+
+    potionSprite.setTexture(
+        texturaPotion);
+
+    potionSprite.setScale(
+        1.f,
+        1.f);
+
+    texturaTreasure.loadFromFile(
+        "assets/treasure.png");
+
+    treasureSprite.setTexture(
+        texturaTreasure);
+
+    treasureSprite.setScale(
+        1.f,
+        1.f);
+
+    texturaWall.loadFromFile(
+        "assets/wall.png");
+
+    wallSprite.setTexture(
+        texturaWall);
+
+    wallSprite.setScale(
+        1.f,
+        1.f);
+
+    texturaZombie.loadFromFile(
+        "assets/zombie.png");
+
+    zombieSprite.setTexture(
+        texturaZombie);
+
+    zombieSprite.setScale(
+        1.f,
+        1.f);
+
+    texturaSkeleton.loadFromFile(
+        "assets/skeleton.png");
+
+    skeletonSprite.setTexture(
+        texturaSkeleton);
+
+    skeletonSprite.setScale(
+        1.f,
+        1.f);
+
+    texturaMonster.loadFromFile(
+        "assets/monster.png");
+
+    monsterSprite.setTexture(
+        texturaMonster);
+
+    monsterSprite.setScale(
+        1.f,
+        1.f);
 
     fuente.loadFromFile(
-        "assets/fonts/arial.ttf"
-    );
+        "assets/fonts/arial.ttf");
 
     textoVidas.setFont(fuente);
 
     textoVidas.setCharacterSize(24);
 
     textoVidas.setFillColor(
-        sf::Color::White
-    );
+        sf::Color::White);
 
     textoVidas.setPosition(
         10.f,
-        10.f
-    );
+        10.f);
 
     textoPuntos.setFont(fuente);
 
     textoPuntos.setCharacterSize(24);
 
     textoPuntos.setFillColor(
-        sf::Color::White
-    );
+        sf::Color::White);
 
     textoPuntos.setPosition(
         10.f,
-        40.f
-    );
+        40.f);
+}
+void juego::ejecutar()
+{
 
-    }
-void juego::ejecutar() {
-
-    while(window.isOpen()) {
+    while (window.isOpen())
+    {
 
         sf::Event event;
 
-        while(window.pollEvent(event)) {
+        while (window.pollEvent(event))
+        {
 
-            if(event.type == sf::Event::Closed) {
+            if (event.type == sf::Event::Closed)
+            {
 
                 window.close();
             }
 
-            if(event.type == sf::Event::KeyPressed) {
+            if (event.type == sf::Event::KeyPressed)
+            {
 
-                if(event.key.code == sf::Keyboard::Escape) {
+                if (event.key.code == sf::Keyboard::Escape)
+                {
 
                     window.close();
                 }
@@ -78,53 +174,58 @@ void juego::ejecutar() {
                 int nuevoX = player.getX();
                 int nuevoY = player.getY();
 
-                if(event.key.code == sf::Keyboard::W) {
+                if (event.key.code == sf::Keyboard::W)
+                {
 
                     nuevoY--;
                 }
 
-                if(event.key.code == sf::Keyboard::S) {
+                if (event.key.code == sf::Keyboard::S)
+                {
 
                     nuevoY++;
                 }
 
-                if(event.key.code == sf::Keyboard::A) {
+                if (event.key.code == sf::Keyboard::A)
+                {
 
                     nuevoX--;
                 }
 
-                if(event.key.code == sf::Keyboard::D) {
+                if (event.key.code == sf::Keyboard::D)
+                {
 
                     nuevoX++;
                 }
 
-                if(
+                if (
                     nuevoX >= 0 &&
                     nuevoX < 10 &&
                     nuevoY >= 0 &&
-                    nuevoY < 10
-                ) {
+                    nuevoY < 10)
+                {
 
                     char celda =
                         sala.getCelda(
                             nuevoY,
-                            nuevoX
-                        );
+                            nuevoX);
 
-                    if(celda == '#') {
+                    if (celda == '#')
+                    {
 
                         continue;
                     }
 
-                    if(celda == 'D') {
+                    if (celda == 'D')
+                    {
 
-                        if(
+                        if (
                             inventario.tieneObjeto(
-                                "Llave"
-                            )
-                        ) {
+                                "Llave"))
+                        {
 
-                            if(numeroSala == 1) {
+                            if (numeroSala == 1)
+                            {
 
                                 numeroSala = 2;
 
@@ -132,17 +233,16 @@ void juego::ejecutar() {
 
                                 player.mover(
                                     1 - player.getX(),
-                                    1 - player.getY()
-                                );
+                                    1 - player.getY());
 
                                 continue;
                             }
 
-                            else {
+                            else
+                            {
 
                                 std::ofstream archivo(
-                                    "record.txt"
-                                );
+                                    "record.txt");
 
                                 archivo
                                     << "Puntaje: "
@@ -154,28 +254,29 @@ void juego::ejecutar() {
                             }
                         }
 
-                        else {
+                        else
+                        {
 
                             continue;
                         }
                     }
 
-                    if(celda == 'K') {
+                    if (celda == 'K')
+                    {
 
                         inventario.agregarObjeto(
-                            "Llave"
-                        );
+                            "Llave");
 
                         player.sumarPuntos(50);
 
                         sala.setCelda(
                             nuevoY,
                             nuevoX,
-                            '.'
-                        );
+                            '.');
                     }
 
-                    if(celda == 'V') {
+                    if (celda == 'V')
+                    {
 
                         player.curar();
 
@@ -184,33 +285,32 @@ void juego::ejecutar() {
                         sala.setCelda(
                             nuevoY,
                             nuevoX,
-                            '.'
-                        );
+                            '.');
                     }
 
-                    if(celda == 'T') {
+                    if (celda == 'T')
+                    {
 
                         player.sumarPuntos(30);
 
                         sala.setCelda(
                             nuevoY,
                             nuevoX,
-                            '.'
-                        );
+                            '.');
                     }
 
-                    if(
+                    if (
                         celda == 'E' ||
                         celda == 'O' ||
                         celda == 'X' ||
-                        celda == 'Z'
-                    ) {
+                        celda == 'Z')
+                    {
 
                         player.perderVida();
 
-                        if(
-                            player.getVidas() <= 0
-                        ) {
+                        if (
+                            player.getVidas() <= 0)
+                        {
 
                             window.close();
                         }
@@ -220,19 +320,19 @@ void juego::ejecutar() {
                         sala.setCelda(
                             nuevoY,
                             nuevoX,
-                            '.'
-                        );
+                            '.');
                     }
 
-                    if(celda == 'J') {
+                    if (celda == 'J')
+                    {
 
                         player.perderVida();
                         player.perderVida();
                         player.perderVida();
 
-                        if(
-                            player.getVidas() <= 0
-                        ) {
+                        if (
+                            player.getVidas() <= 0)
+                        {
 
                             window.close();
                         }
@@ -242,107 +342,206 @@ void juego::ejecutar() {
                         sala.setCelda(
                             nuevoY,
                             nuevoX,
-                            '.'
-                        );
+                            '.');
                     }
 
                     player.mover(
                         nuevoX - player.getX(),
-                        nuevoY - player.getY()
-                    );
+                        nuevoY - player.getY());
                 }
             }
         }
 
         window.clear();
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++)
+        {
 
-            for(int j = 0; j < 10; j++) {
+            for (int j = 0; j < 10; j++)
+            {
 
                 bloque.setPosition(
                     j * 50.f,
-                    i * 50.f
-                );
+                    i * 50.f);
 
                 char celda =
                     sala.getCelda(i, j);
 
-                if(celda == '#') {
+                if (celda == '#')
+                {
 
                     bloque.setFillColor(
-                        sf::Color::Blue
-                    );
+                        sf::Color(50, 50, 50));
+
+                    window.draw(bloque);
+
+                    wallSprite.setPosition(
+                        j * 50.f,
+                        i * 50.f);
+
+                    window.draw(wallSprite);
+
+                    continue;
                 }
 
-                else if(celda == 'K') {
+                else if (celda == 'K')
+                {
 
                     bloque.setFillColor(
-                        sf::Color::Yellow
-                    );
+                        sf::Color(50, 50, 50));
+
+                    window.draw(bloque);
+
+                    keySprite.setPosition(
+                        j * 50.f,
+                        i * 50.f);
+
+                    window.draw(keySprite);
+
+                    continue;
                 }
 
-                else if(celda == 'V') {
+                else if (celda == 'V')
+                {
 
                     bloque.setFillColor(
-                        sf::Color::Green
-                    );
+                        sf::Color(50, 50, 50));
+
+                    window.draw(bloque);
+
+                    potionSprite.setPosition(
+                        j * 50.f,
+                        i * 50.f);
+
+                    window.draw(potionSprite);
+
+                    continue;
                 }
 
-                else if(celda == 'T') {
+                else if (celda == 'T')
+                {
 
                     bloque.setFillColor(
-                        sf::Color::Cyan
-                    );
+                        sf::Color(50, 50, 50));
+
+                    window.draw(bloque);
+
+                    treasureSprite.setPosition(
+                        j * 50.f,
+                        i * 50.f);
+
+                    window.draw(treasureSprite);
+
+                    continue;
                 }
 
-                else if(celda == 'D') {
+                else if (celda == 'D')
+                {
 
                     bloque.setFillColor(
-                        sf::Color(139,69,19)
-                    );
+                        sf::Color(50, 50, 50));
+
+                    window.draw(bloque);
+
+                    doorSprite.setPosition(
+                        j * 50.f,
+                        i * 50.f);
+
+                    window.draw(doorSprite);
+
+                    continue;
                 }
 
-                else if(celda == 'E') {
+                else if (celda == 'E')
+                {
 
                     bloque.setFillColor(
-                        sf::Color::Red
-                    );
+                        sf::Color(50, 50, 50));
+
+                    window.draw(bloque);
+
+                    skeletonSprite.setPosition(
+                        j * 50.f,
+                        i * 50.f);
+
+                    window.draw(skeletonSprite);
+
+                    continue;
                 }
 
-                else if(celda == 'O') {
+                else if (celda == 'O')
+                {
 
                     bloque.setFillColor(
-                        sf::Color(100,255,100)
-                    );
+                        sf::Color(50, 50, 50));
+
+                    window.draw(bloque);
+
+                    OgroSprite.setPosition(
+                        j * 50.f,
+                        i * 50.f);
+
+                    window.draw(OgroSprite);
+
+                    continue;
                 }
 
-                else if(celda == 'X') {
+                else if (celda == 'X')
+                {
 
                     bloque.setFillColor(
-                        sf::Color::Magenta
-                    );
+                        sf::Color(50, 50, 50));
+
+                    window.draw(bloque);
+
+                    monsterSprite.setPosition(
+                        j * 50.f,
+                        i * 50.f);
+
+                    window.draw(monsterSprite);
+
+                    continue;
                 }
 
-                else if(celda == 'Z') {
+                else if (celda == 'Z')
+                {
 
                     bloque.setFillColor(
-                        sf::Color::White
-                    );
+                        sf::Color(50, 50, 50));
+
+                    window.draw(bloque);
+
+                    zombieSprite.setPosition(
+                        j * 50.f,
+                        i * 50.f);
+
+                    window.draw(zombieSprite);
+
+                    continue;
                 }
 
-                else if(celda == 'J') {
+                else if (celda == 'J')
+                {
 
                     bloque.setFillColor(
-                        sf::Color::Red
-                    );
+                        sf::Color(50, 50, 50));
+
+                    window.draw(bloque);
+
+                    bossSprite.setPosition(
+                        j * 50.f,
+                        i * 50.f);
+
+                    window.draw(bossSprite);
+
+                    continue;
                 }
 
-                else {
+                else
+                {
 
                     bloque.setFillColor(
-                        sf::Color(50,50,50)
-                    );
+                        sf::Color(50, 50, 50));
                 }
 
                 window.draw(bloque);
@@ -351,17 +550,14 @@ void juego::ejecutar() {
 
         jugadorSprite.setPosition(
             player.getX() * 50.f - 7.f,
-            player.getY() * 50.f - 7.f
-        );
+            player.getY() * 50.f - 7.f);
 
         window.draw(jugadorSprite);
 
         textoVidas.setString(
-            "Vidas: " + std::to_string(player.getVidas())
-        );
+            "Vidas: " + std::to_string(player.getVidas()));
         textoPuntos.setString(
-            "Puntos: " + std::to_string(player.getPuntos())
-        );
+            "Puntos: " + std::to_string(player.getPuntos()));
 
         window.draw(textoVidas);
         window.draw(textoPuntos);
