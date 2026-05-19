@@ -7,10 +7,10 @@
 #include "sala.h"
 #include "inventario.h"
 
-class juego {
+class juego
+{
 
 private:
-
     Sala sala;
 
     jugador player;
@@ -39,7 +39,7 @@ private:
 
     sf::Texture texturaKey;
 
-    sf::Sprite keySprite;   
+    sf::Sprite keySprite;
 
     sf::Texture texturaDoor;
 
@@ -72,8 +72,30 @@ private:
     sf::Texture texturaMonster;
 
     sf::Sprite monsterSprite;
-public:
 
+    sf::Font fuente1;
+
+    enum EstadoJuego
+    {
+
+        MENU,
+
+        JUGANDO,
+
+        GAMEOVER,
+
+        VICTORIA
+    };
+
+    EstadoJuego estado;
+
+    sf::Text textoMenu;
+
+    sf::Text textoGameOver;
+
+    sf::Text textoVictoria;
+
+public:
     juego();
 
     void ejecutar();
