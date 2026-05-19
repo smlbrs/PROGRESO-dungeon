@@ -9,19 +9,31 @@ int main()
     Sala sala;
     jugador player;
 
+    sf::Texture texturaJugador;
+    if(!texturaJugador.loadFromFile(
+    "assets/player.png"
+    )) {
+
+    return -1;
+    }
+
+    sf::Sprite jugadorSprite;
+    jugadorSprite.setTexture(
+        texturaJugador
+    );
+
+    jugadorSprite.setScale(
+        0.3f,
+        0.3f
+    );
+
     sf::RenderWindow window(
         sf::VideoMode(500, 500),
         "Dungeon Game");
 
     sf::RectangleShape bloque(
         sf::Vector2f(50.f, 50.f));
-
-    sf::RectangleShape jugadorShape(
-        sf::Vector2f(40.f, 40.f));
-
-    jugadorShape.setFillColor(
-        sf::Color::Red);
-
+        
     while (window.isOpen())
     {
 
@@ -146,24 +158,22 @@ int main()
 
                     bloque.setFillColor(
                         sf::Color::Magenta);
-                }
-
-                else
-                {
+                } else {
 
                     bloque.setFillColor(
-                        sf::Color::Black);
+                        sf::Color(50, 50, 50));
                 }
 
                 window.draw(bloque);
             }
         }
 
-        jugadorShape.setPosition(
+        jugadorSprite.setPosition(
             player.getX() * 50.f + 5.f,
-            player.getY() * 50.f + 5.f);
+            player.getY() * 50.f + 5.f
+        );
 
-        window.draw(jugadorShape);
+        window.draw(jugadorSprite);
 
         window.display();
     }
