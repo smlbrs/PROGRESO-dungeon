@@ -123,7 +123,9 @@ juego::juego()
     fuente.loadFromFile(
         "assets/fonts/arial.ttf");
 
-    textoVidas.setFont(fuente);
+    fuente1.loadFromFile(
+        "assets/fonts/times.ttf");
+    textoVidas.setFont(fuente1);
 
     textoVidas.setCharacterSize(24);
 
@@ -144,6 +146,50 @@ juego::juego()
     textoPuntos.setPosition(
         10.f,
         40.f);
+
+    estado = MENU;
+
+    textoMenu.setFont(fuente1);
+
+    textoMenu.setCharacterSize(40);
+
+    textoMenu.setFillColor(
+        sf::Color::Yellow);
+
+    textoMenu.setString(
+        "Dungeon Game\nENTER para jugar");
+
+    textoMenu.setPosition(
+        50.f,
+        200.f);
+
+    textoGameOver.setFont(fuente1);
+
+    textoGameOver.setCharacterSize(40);
+
+    textoGameOver.setFillColor(
+        sf::Color::Red);
+
+    textoGameOver.setString(
+        "GAME OVER");
+
+    textoGameOver.setPosition(
+        150.f,
+        200.f);
+
+    textoVictoria.setFont(fuente1);
+
+    textoVictoria.setCharacterSize(40);
+
+    textoVictoria.setFillColor(
+        sf::Color::Green);
+
+    textoVictoria.setString(
+        "VICTORIA");
+
+    textoVictoria.setPosition(
+        150.f,
+        200.f);
 }
 void juego::ejecutar()
 {
@@ -169,6 +215,24 @@ void juego::ejecutar()
                 {
 
                     window.close();
+                }
+
+                if (estado == MENU)
+                {
+
+                    if (
+
+                        event.key.code == sf::Keyboard::Enter)
+                    {
+                        estado = JUGANDO;
+                    }
+                    continue;
+                }
+
+                if (estado == GAMEOVER || estado == VICTORIA)
+                {
+
+                    continue;
                 }
 
                 int nuevoX = player.getX();
@@ -250,8 +314,9 @@ void juego::ejecutar()
 
                                 archivo.close();
 
-                                window.close();
-                            }
+                                estado = VICTORIA;
+                                continue;
+                                }   
                         }
 
                         else
@@ -312,7 +377,7 @@ void juego::ejecutar()
                             player.getVidas() <= 0)
                         {
 
-                            window.close();
+                            estado = GAMEOVER;
                         }
 
                         player.sumarPuntos(40);
@@ -334,7 +399,7 @@ void juego::ejecutar()
                             player.getVidas() <= 0)
                         {
 
-                            window.close();
+                            estado = GAMEOVER;
                         }
 
                         player.sumarPuntos(100);
@@ -353,6 +418,30 @@ void juego::ejecutar()
         }
 
         window.clear();
+
+        if (estado == MENU)
+        {
+
+            window.draw(textoMenu);
+            window.display();
+            continue;
+        }
+
+        if (estado == GAMEOVER)
+        {
+
+            window.draw(textoGameOver);
+            window.display();
+            continue;
+        }
+
+        if (estado == VICTORIA)
+        {
+
+            window.draw(textoVictoria);
+            window.display();
+            continue;
+        }
 
         for (int i = 0; i < 10; i++)
         {
