@@ -1,185 +1,371 @@
 #include "../include/juego.h"
-#include <iostream>
 #include <fstream>
 
-juego::juego() {
+juego::juego()
+: window(
+    sf::VideoMode(500, 500),
+    "Dungeon Game"
+),
+bloque(sf::Vector2f(50.f, 50.f))
+{
+
     numeroSala = 1;
+
+    texturaJugador.loadFromFile(
+        "assets/player.png"
+    );
+
+    jugadorSprite.setTexture(
+        texturaJugador
+    );
+
+    jugadorSprite.setScale(
+        1.f,
+        1.f
+    );
 }
+
+    fuente.loadFromFile(
+        "assets/fonts/arial.ttf"
+    );
+
+    textovidas.setFont(fuente);
+
+    textoVidas.setCharacterSize(24);
+
+    textoVidas.setFillColor(
+        sf::Color::White
+    );
+
+    textoVidas.setPosition(
+        10.f,
+        10.f
+    );
+
+    textoPuntos.setFont(fuente);
+
+    textoPuntos.setCharacterSize(24);
+
+    textoPuntos.setFillColor(
+        sf::Color::White
+    );
+
+    textoPuntos.setPosition(
+        10.f,
+        40.f
+    );
 
 void juego::ejecutar() {
 
-    inventario.agregarObjeto("Pocion");
+    while(window.isOpen()) {
 
-    char tecla;
+        sf::Event event;
 
-    while(true) {
+        while(window.pollEvent(event)) {
 
-    for(int i = 0; i < 10; i++) {   
+            if(event.type == sf::Event::Closed) {
 
-        for(int j = 0; j < 10; j++) {
-
-            if(i == player.getY() && j == player.getX()) {
-                std::cout << 'P';
+                window.close();
             }
-            else {
-                std::cout << sala.getCelda(i, j);
+
+            if(event.type == sf::Event::KeyPressed) {
+
+                if(event.key.code == sf::Keyboard::Escape) {
+
+                    window.close();
+                }
+
+                int nuevoX = player.getX();
+                int nuevoY = player.getY();
+
+                if(event.key.code == sf::Keyboard::W) {
+
+                    nuevoY--;
+                }
+
+                if(event.key.code == sf::Keyboard::S) {
+
+                    nuevoY++;
+                }
+
+                if(event.key.code == sf::Keyboard::A) {
+
+                    nuevoX--;
+                }
+
+                if(event.key.code == sf::Keyboard::D) {
+
+                    nuevoX++;
+                }
+
+                if(
+                    nuevoX >= 0 &&
+                    nuevoX < 10 &&
+                    nuevoY >= 0 &&
+                    nuevoY < 10
+                ) {
+
+                    char celda =
+                        sala.getCelda(
+                            nuevoY,
+                            nuevoX
+                        );
+
+                    if(celda == '#') {
+
+                        continue;
+                    }
+
+                    if(celda == 'D') {
+
+                        if(
+                            inventario.tieneObjeto(
+                                "Llave"
+                            )
+                        ) {
+
+                            if(numeroSala == 1) {
+
+                                numeroSala = 2;
+
+                                sala.cargarSala2();
+
+                                player.mover(
+                                    1 - player.getX(),
+                                    1 - player.getY()
+                                );
+
+                                continue;
+                            }
+
+                            else {
+
+                                std::ofstream archivo(
+                                    "record.txt"
+                                );
+
+                                archivo
+                                    << "Puntaje: "
+                                    << player.getPuntos();
+
+                                archivo.close();
+
+                                window.close();
+                            }
+                        }
+
+                        else {
+
+                            continue;
+                        }
+                    }
+
+                    if(celda == 'K') {
+
+                        inventario.agregarObjeto(
+                            "Llave"
+                        );
+
+                        player.sumarPuntos(50);
+
+                        sala.setCelda(
+                            nuevoY,
+                            nuevoX,
+                            '.'
+                        );
+                    }
+
+                    if(celda == 'V') {
+
+                        player.curar();
+
+                        player.sumarPuntos(20);
+
+                        sala.setCelda(
+                            nuevoY,
+                            nuevoX,
+                            '.'
+                        );
+                    }
+
+                    if(celda == 'T') {
+
+                        player.sumarPuntos(30);
+
+                        sala.setCelda(
+                            nuevoY,
+                            nuevoX,
+                            '.'
+                        );
+                    }
+
+                    if(
+                        celda == 'E' ||
+                        celda == 'O' ||
+                        celda == 'X' ||
+                        celda == 'Z'
+                    ) {
+
+                        player.perderVida();
+
+                        if(
+                            player.getVidas() <= 0
+                        ) {
+
+                            window.close();
+                        }
+
+                        player.sumarPuntos(40);
+
+                        sala.setCelda(
+                            nuevoY,
+                            nuevoX,
+                            '.'
+                        );
+                    }
+
+                    if(celda == 'J') {
+
+                        player.perderVida();
+                        player.perderVida();
+                        player.perderVida();
+
+                        if(
+                            player.getVidas() <= 0
+                        ) {
+
+                            window.close();
+                        }
+
+                        player.sumarPuntos(100);
+
+                        sala.setCelda(
+                            nuevoY,
+                            nuevoX,
+                            '.'
+                        );
+                    }
+
+                    player.mover(
+                        nuevoX - player.getX(),
+                        nuevoY - player.getY()
+                    );
+                }
             }
         }
 
-        std::cout << std::endl;
-    }
+        window.clear();
 
-    std::cout << "-------------------------" << std::endl;
-    std::cout << "| P = jugador  J = jefe |" << std::endl;
-    std::cout << "| V = cura   T = tesoro |" << std::endl;
-    std::cout << "| P = puerta  K = llave |" << std::endl;
-    std::cout << "-------------------------" << std::endl;
+        for(int i = 0; i < 10; i++) {
 
-    std::cout << "----------------------------" << std::endl;
-    std::cout << "| E = Enemigos             |" << std::endl;
-    std::cout << "| !O = Ogro  !X = Mounstro |" << std::endl;
-    std::cout << "| !Z = Zombie              |" << std::endl;
-    std::cout << "----------------------------" << std::endl;
+            for(int j = 0; j < 10; j++) {
 
-    std::cout << "\nVidas: " << player.getVidas() << std::endl;
-
-    std::cout << "Puntos: " << player.getPuntos() << std::endl;
-
-    inventario.mostrar();
-
-        std::cout << "W para mover arriba \n" << std::endl;
-                std::cout << "A para mover izquierda \n" << std::endl;
-                        std::cout << "S para mover abajo \n" << std::endl;
-                                std::cout << "D para mover derecha\n" << std::endl;
-
-        std::cin >> tecla;
-
-        int nuevoX = player.getX();
-        int nuevoY = player.getY();
-
-        if(tecla == 'w') nuevoY--;
-        if(tecla == 's') nuevoY++;
-        if(tecla == 'a') nuevoX--;
-        if(tecla == 'd') nuevoX++;
-
-        if(tecla == 'W') nuevoY--;
-        if(tecla == 'S') nuevoY++;
-        if(tecla == 'A') nuevoX--;
-        if(tecla == 'D') nuevoX++;
-
-        if(
-        nuevoX >= 0 && nuevoX < 10 &&
-        nuevoY >= 0 && nuevoY < 10
-) {
-
-    char celda = sala.getCelda(nuevoY, nuevoX);
-    if(celda == '#') {
-        continue;
-    }
-
-    if(celda == 'D') {
-        if(inventario.tieneObjeto("Llave")) {
-            if(numeroSala == 1) {
-                numeroSala = 2;
-
-                sala.cargarSala2();
-
-                player.mover(
-                    1 - player.getX(),
-                    1 - player.getY()
+                bloque.setPosition(
+                    j * 50.f,
+                    i * 50.f
                 );
 
-                continue;
-            } else {    
-                std::cout << "\nGANASTE\n";
+                char celda =
+                    sala.getCelda(i, j);
 
-        std::ofstream archivo("record.txt");
-        archivo << "Puntaje: " << player.getPuntos();
+                if(celda == '#') {
 
-        archivo.close();
+                    bloque.setFillColor(
+                        sf::Color::Blue
+                    );
+                }
 
-        break;
-    }
-    }
-    else {
-            std::cout << "Necesitas una llave\n";
-            continue;
+                else if(celda == 'K') {
+
+                    bloque.setFillColor(
+                        sf::Color::Yellow
+                    );
+                }
+
+                else if(celda == 'V') {
+
+                    bloque.setFillColor(
+                        sf::Color::Green
+                    );
+                }
+
+                else if(celda == 'T') {
+
+                    bloque.setFillColor(
+                        sf::Color::Cyan
+                    );
+                }
+
+                else if(celda == 'D') {
+
+                    bloque.setFillColor(
+                        sf::Color(139,69,19)
+                    );
+                }
+
+                else if(celda == 'E') {
+
+                    bloque.setFillColor(
+                        sf::Color::Red
+                    );
+                }
+
+                else if(celda == 'O') {
+
+                    bloque.setFillColor(
+                        sf::Color(100,255,100)
+                    );
+                }
+
+                else if(celda == 'X') {
+
+                    bloque.setFillColor(
+                        sf::Color::Magenta
+                    );
+                }
+
+                else if(celda == 'Z') {
+
+                    bloque.setFillColor(
+                        sf::Color::White
+                    );
+                }
+
+                else if(celda == 'J') {
+
+                    bloque.setFillColor(
+                        sf::Color::Red
+                    );
+                }
+
+                else {
+
+                    bloque.setFillColor(
+                        sf::Color(50,50,50)
+                    );
+                }
+
+                window.draw(bloque);
+            }
         }
-    }
 
-    if(celda == 'K') {
-        inventario.agregarObjeto("Llave");
-         player.sumarPuntos(50);
-        sala.setCelda(nuevoY, nuevoX, '.');
-    }
+        jugadorSprite.setPosition(
+            player.getX() * 50.f - 7.f,
+            player.getY() * 50.f - 7.f
+        );
 
-    if(celda == 'V') {
-        player.curar();
-        player.sumarPuntos(20);
+        window.draw(jugadorSprite);
 
-        sala.setCelda(nuevoY, nuevoX, '.');
+        textoVidas.setString(
+            "Vidas: " + std::to_string(player.getVidas())
+        );
+        textoPuntos.setString(
+            "Puntos: " + std::to_string(player.getPuntos())
+        );
 
-        std::cout<<"\nTe curaste\n";
-    }
-
-    if(celda == 'T') {
-    player.sumarPuntos(30);
-
-    sala.setCelda(nuevoY, nuevoX, '.');
-
-    std::cout << "\nTesoro recogido\n";
-}
-
-    if(
-    celda == 'E' ||
-    celda == 'O' ||
-    celda == 'X' ||
-    celda == 'Z'
-) {
-    player.perderVida();
-
-    std::cout << "\nUn enemigo te ataco\n";
-
-    if(player.getVidas() <= 0) {
-        std::cout << "\nGAME OVER\n";
-        break;
-    }
-    player.sumarPuntos(40);
-    sala.setCelda(nuevoY, nuevoX, '.');
-}
-
-    if(celda == 'J') {
-
-    player.perderVida();
-    player.perderVida();
-    player.perderVida();
-
-    std::cout << "\nEl jefe te golpeo\n";
-
-    if(player.getVidas() <= 0) {
-
-        std::cout << "\nMORISTE JAJA\n";
-
-        break;
-    }
-    player.sumarPuntos(100);
-    sala.setCelda(nuevoY, nuevoX, '.');
-}
-    
-    player.mover(
-        nuevoX - player.getX(),
-        nuevoY - player.getY()
-    );
-} {
-            if(sala.getCelda(nuevoY, nuevoX) == 'K') {
-            inventario.agregarObjeto("Llave");
-            sala.setCelda(nuevoY, nuevoX, '.');
-        }  
-            player.mover(
-                nuevoX - player.getX(),
-                nuevoY - player.getY()
-            );
-        }
+        window.draw(textoVidas);
+        window.draw(textoPuntos);
+        
+        window.display();
     }
 }
-
