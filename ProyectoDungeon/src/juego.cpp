@@ -23,13 +23,12 @@ bloque(sf::Vector2f(50.f, 50.f))
         1.f,
         1.f
     );
-}
 
     fuente.loadFromFile(
         "assets/fonts/arial.ttf"
     );
 
-    textovidas.setFont(fuente);
+    textoVidas.setFont(fuente);
 
     textoVidas.setCharacterSize(24);
 
@@ -55,6 +54,7 @@ bloque(sf::Vector2f(50.f, 50.f))
         40.f
     );
 
+    }
 void juego::ejecutar() {
 
     while(window.isOpen()) {
@@ -365,7 +365,7 @@ void juego::ejecutar() {
 
         window.draw(textoVidas);
         window.draw(textoPuntos);
-        
+
         window.display();
     }
 }
