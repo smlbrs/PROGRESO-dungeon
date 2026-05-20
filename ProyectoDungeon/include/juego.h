@@ -98,10 +98,14 @@ private:
 
     sf::Music musica;
 
+    sf::Clock relojEnemigos;
+
 public:
     juego();
 
     void ejecutar();
+
+    void moverEnemigos();
 };
 
 #endif
