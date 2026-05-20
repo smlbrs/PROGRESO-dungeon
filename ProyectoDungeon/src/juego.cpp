@@ -232,9 +232,11 @@ void juego::ejecutar()
             if (event.type == sf::Event::KeyPressed)
             {
 
-                if (event.key.code == sf::Keyboard::Escape)
-                {
+                if (event.key.code == sf::Keyboard::Space){
+                    atacar();
+                }
 
+                if(event.key.code == sf::Keyboard::Escape) {
                     window.close();
                 }
 
@@ -262,6 +264,8 @@ void juego::ejecutar()
                 if (event.key.code == sf::Keyboard::W)
                 {
 
+                    player.setDireccion('w');
+
                     nuevoY--;
 
                     jugadorSprite.setTextureRect(
@@ -275,6 +279,8 @@ void juego::ejecutar()
                 if (event.key.code == sf::Keyboard::S)
                 {
 
+                    player.setDireccion('s');
+
                     nuevoY++;
                     jugadorSprite.setTextureRect(
                         sf::IntRect(
@@ -287,6 +293,8 @@ void juego::ejecutar()
                 if (event.key.code == sf::Keyboard::A)
                 {
 
+                    player.setDireccion('a');
+
                     nuevoX--;
 
                     jugadorSprite.setTextureRect(
@@ -298,6 +306,8 @@ void juego::ejecutar()
                 }
                 if (event.key.code == sf::Keyboard::D)
                 {
+
+                    player.setDireccion('d');
 
                     nuevoX++;
                     jugadorSprite.setTextureRect(
@@ -853,4 +863,43 @@ void juego::moverJefe() {
                         }
                     }
                 }
+}
+
+void juego::atacar() {
+
+    int ataqueX = player.getX();
+    int ataqueY = player.getY();
+
+    char direccion = player.getDireccion();
+
+    if(direccion == 'w') {
+        ataqueY--;
+    }
+    else if(direccion == 's') {
+        ataqueY++;
+    }
+    else if(direccion == 'a') {
+        ataqueX--;
+    }
+    else if(direccion == 'd') {
+        ataqueX++;
+    }
+
+    if(ataqueX < 0 || ataqueX >= 10 || ataqueY < 0 || ataqueY >= 10) {
+        return;
+    }
+
+    char celda = sala.getCelda(ataqueY, ataqueX);
+
+    if(celda == 'E' || celda == 'O' || celda == 'X' || celda == 'Z') {
+
+        sala.setCelda(ataqueY, ataqueX, '.');
+        player.sumarPuntos(50);
+    }
+
+    if(celda == 'J') {
+
+        sala.setCelda(ataqueY, ataqueX, 'R');
+        player.sumarPuntos(500);
+    }
 }

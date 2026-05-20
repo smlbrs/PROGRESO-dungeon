@@ -112,6 +112,8 @@ public:
     void moverEnemigos();
 
     void moverJefe();
+
+    void atacar();
 };
 
 #endif

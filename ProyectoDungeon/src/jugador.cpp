@@ -9,6 +9,7 @@ jugador::jugador() {
     y = 1;
     vidas = 3;
     puntos = 0;
+    direccion = 's';
 }
 
 int jugador::getX() {
@@ -49,4 +50,12 @@ void jugador::curar() {
 void jugador::sumarPuntos(int cantidad) {
 
     puntos += cantidad;
+}
+
+void jugador::setDireccion(char d) {
+    direccion = d;
+}
+
+char jugador::getDireccion() {
+    return direccion;
 }

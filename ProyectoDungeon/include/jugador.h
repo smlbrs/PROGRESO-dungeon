@@ -7,6 +7,7 @@ private:
     int y;
     int vidas;
     int puntos;
+    char direccion;
 
 public:
     jugador();
@@ -21,6 +22,9 @@ public:
     int getPuntos();
 
     void sumarPuntos(int cantidad);
+    void setDireccion(char d);
+
+    char getDireccion();
 };
 
 #endif  
