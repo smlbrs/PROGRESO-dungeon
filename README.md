@@ -13,7 +13,9 @@
 - Sprite sheet con cambio de dirección
 - Estados del juego (menú, victoria y game over)
 - Enemigos móviles
+- Sonidos de efectos en los enemigos
 - Rescate final de la princesa
+
 
 # Cómo ejecutar el proyecto
 

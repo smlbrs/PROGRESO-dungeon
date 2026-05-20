@@ -10,6 +10,7 @@ Se implementó para almacenar:
 - música
 - imágenes
 - fuentes
+- Sonidos de efectos
 
 # ¿Por qué se consideró necesario?
 
