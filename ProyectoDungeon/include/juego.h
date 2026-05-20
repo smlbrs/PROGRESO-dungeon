@@ -112,6 +112,8 @@ private:
 
     sf::RectangleShape fondoBoss;
 
+    sf::Clock attackClock;
+
 public:
     juego();
 

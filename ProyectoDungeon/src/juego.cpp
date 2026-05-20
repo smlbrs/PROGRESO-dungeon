@@ -228,7 +228,7 @@ juego::juego()
         sf::Color::Green);
 
     textoVictoria.setString(
-        "RESCATASTE A LA PRINCESA\nESC para salir");
+        "RESCATASTE A \nLA \nPRINCESA\nESC para salir");
 
     textoVictoria.setPosition(
         150.f,
@@ -301,7 +301,7 @@ void juego::ejecutar()
 
                     jugadorSprite.setTextureRect(
                         sf::IntRect(
-                            128,
+                            0,
                             0,
                             64,
                             64));
@@ -941,4 +941,10 @@ void juego::atacar() {
             player.sumarPuntos(500);
         }
     }
+
+    if(attackClock.getElapsedTime().asSeconds() >= 0.5f) {
+        return;
+    }
+
+    attackClock.restart();
 }
