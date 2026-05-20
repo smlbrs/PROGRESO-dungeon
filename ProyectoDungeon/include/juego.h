@@ -106,6 +106,12 @@ private:
 
     int vidaJefe;
 
+    sf::Text textoBoss;
+
+    sf::RectangleShape barraBoss;
+
+    sf::RectangleShape fondoBoss;
+
 public:
     juego();
 
