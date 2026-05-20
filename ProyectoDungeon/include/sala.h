@@ -14,6 +14,7 @@ public:
     void setCelda(int fila, int columna, char valor);
 
     void cargarSala2();
+    void cargarSala3();
 };
 
 #endif

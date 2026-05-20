@@ -338,19 +338,17 @@ void juego::ejecutar()
                                 continue;
                             }
 
-                            else
+                            else if (numeroSala == 2)
                             {
 
-                                std::ofstream archivo(
-                                    "record.txt");
+                                numeroSala = 3;
 
-                                archivo
-                                    << "Puntaje: "
-                                    << player.getPuntos();
+                                sala.cargarSala3();
 
-                                archivo.close();
+                                player.mover(
+                                    1 - player.getX(),
+                                    1 - player.getY());
 
-                                estado = VICTORIA;
                                 continue;
                             }
                         }
@@ -443,7 +441,21 @@ void juego::ejecutar()
                         sala.setCelda(
                             nuevoY,
                             nuevoX,
-                            '.');
+                            'R');
+                    }
+
+                    if (celda == 'R')
+                    {
+                        std::ofstream archivo(
+                            "record.txt");
+
+                        archivo
+                            << "Puntaje: "
+                            << player.getPuntos();
+
+                        archivo.close();
+
+                        estado = VICTORIA;
                     }
 
                     player.mover(
@@ -452,14 +464,14 @@ void juego::ejecutar()
                 }
             }
 
-            if(relojEnemigos.getElapsedTime().asSeconds() >= 1.f) {
+            if (relojEnemigos.getElapsedTime().asSeconds() >= 1.f)
+            {
 
                 moverEnemigos();
 
                 relojEnemigos.restart();
             }
-
-    }
+        }
         window.clear();
 
         if (estado == MENU)
@@ -669,6 +681,13 @@ void juego::ejecutar()
                     continue;
                 }
 
+                else if (celda == 'R')
+                {
+
+                    bloque.setFillColor(
+                        sf::Color::Yellow);
+                }
+
                 else
                 {
 
@@ -698,50 +717,60 @@ void juego::ejecutar()
     }
 }
 
-    void juego::moverEnemigos() {
-                
-                for(int i = 0; i < 10; i++) {
+void juego::moverEnemigos()
+{
 
-                    for(int j = 0; j < 10; j++) {
-                        
-                        char celda = sala.getCelda(i, j);
+    for (int i = 0; i < 10; i++)
+    {
 
-                        if(celda == 'E' || celda == 'O' || celda == 'X' || celda == 'Z') {
-                            
-                            int direccion = rand() % 4;
+        for (int j = 0; j < 10; j++)
+        {
 
-                            int nuevoX = j;
-                            int nuevoY = i;
+            char celda = sala.getCelda(i, j);
 
-                            if(direccion == 0) {
+            if (celda == 'E' || celda == 'O' || celda == 'X' || celda == 'Z')
+            {
 
-                                nuevoY--;
-                            }
+                int direccion = rand() % 4;
 
-                            else if(direccion == 1) {
+                int nuevoX = j;
+                int nuevoY = i;
 
-                                nuevoY++;
-                            }
+                if (direccion == 0)
+                {
 
-                            else if(direccion == 2) {
+                    nuevoY--;
+                }
 
-                                nuevoX--;
-                            }
+                else if (direccion == 1)
+                {
 
-                            else if(direccion == 3) {
+                    nuevoY++;
+                }
 
-                                nuevoX++;
-                            }
+                else if (direccion == 2)
+                {
 
-                            if(nuevoX >= 0 && nuevoX < 10 && nuevoY >= 0 && nuevoY < 10) {
+                    nuevoX--;
+                }
 
-                                if(sala.getCelda(nuevoY, nuevoX) == '.') {
+                else if (direccion == 3)
+                {
 
-                                    sala.setCelda(nuevoY, nuevoX, celda);
-                                    sala.setCelda(i, j, '.');
-                                }
-                        }
+                    nuevoX++;
+                }
+
+                if (nuevoX >= 0 && nuevoX < 10 && nuevoY >= 0 && nuevoY < 10)
+                {
+
+                    if (sala.getCelda(nuevoY, nuevoX) == '.')
+                    {
+
+                        sala.setCelda(nuevoY, nuevoX, celda);
+                        sala.setCelda(i, j, '.');
                     }
                 }
             }
         }
+    }
+}
