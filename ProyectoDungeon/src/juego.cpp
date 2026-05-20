@@ -242,24 +242,49 @@ void juego::ejecutar()
                 {
 
                     nuevoY--;
+
+                    jugadorSprite.setTextureRect(
+                        sf::IntRect(
+                            128,
+                            0,
+                            64,
+                            64));
                 }
 
                 if (event.key.code == sf::Keyboard::S)
                 {
 
                     nuevoY++;
+                    jugadorSprite.setTextureRect(
+                        sf::IntRect(
+                            192,
+                            0,
+                            64,
+                            64));
                 }
 
                 if (event.key.code == sf::Keyboard::A)
                 {
 
                     nuevoX--;
-                }
 
+                    jugadorSprite.setTextureRect(
+                        sf::IntRect(
+                            64,
+                            0,
+                            64,
+                            64));
+                }
                 if (event.key.code == sf::Keyboard::D)
                 {
 
                     nuevoX++;
+                    jugadorSprite.setTextureRect(
+                        sf::IntRect(
+                            0,
+                            0,
+                            64,
+                            64));
                 }
 
                 if (
@@ -316,7 +341,7 @@ void juego::ejecutar()
 
                                 estado = VICTORIA;
                                 continue;
-                                }   
+                            }
                         }
 
                         else
