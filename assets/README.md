@@ -24,14 +24,17 @@ Los recursos fueron almacenados en formatos compatibles con SFML:
 - .png
 - .ogg
 - .ttf
+- .mav
 
 Estos recursos son cargados usando:
 
 - sf::Texture
 - sf::Music
 - sf::Font
+- sf::SoundBuffer
+- sf::Sound
 
-# Innovaciones implementadas
+## Innovaciones implementadas
 
 ## Sprite Sheet del jugador
 
