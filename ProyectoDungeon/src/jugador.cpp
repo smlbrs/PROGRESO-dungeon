@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/jugador.h"
+#include "jugador.h"
 
 jugador::jugador() {
 

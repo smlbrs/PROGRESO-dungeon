@@ -1,4 +1,4 @@
-#include "../include/inventario.h"
+#include "inventario.h"
 #include <iostream>
 
 Inventario::Inventario() {

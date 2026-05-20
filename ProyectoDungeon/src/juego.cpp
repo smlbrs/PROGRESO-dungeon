@@ -1,4 +1,4 @@
-#include "../include/juego.h"
+#include "juego.h"
 #include <fstream>
 #include <cstdlib>
 #include <ctime>

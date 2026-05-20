@@ -1,2 +1,17 @@
 build/
+
+*.exe
+*.out
+*.app
+
+*.o
+*.obj
+
+*.tmp
+
 .vscode/
+
+.idea/
+
+.DS_Store
+Thumbs.db

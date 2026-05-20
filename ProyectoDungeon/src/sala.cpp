@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/sala.h"
+#include "sala.h"
 
 Sala::Sala() {
 
