@@ -1,18 +1,33 @@
-# Samuel Barbosa Progreso
+# Dungeon Game
+## Samuel Barbosa Morales
 
-la idea que tengo de hacer el juego tener todo lo básico, jugador, mapa, interacción, enemigos, inventario.
+# Innovaciones implementadas
 
-## Cosas que quiero agregar mas adelante
+- Sistema de múltiples salas
+- Sistema de combate con ataque direccional
+- Jefe final con persecución automática
+- Barra de vida gráfica del jefe
+- Sistema de inventario
+- Sistema de puntos
+- Música de fondo
+- Sprite sheet con cambio de dirección
+- Estados del juego (menú, victoria y game over)
+- Enemigos móviles
+- Rescate final de la princesa
 
-- Un mapa más visual y organizado
-- No usar solamente `#` o `,`
-- Inventario con máximo 5 objetos
-- 8 enemigos diferentes
-- Un jefe para desbloquear una habitación
-- Sonidos para:
-  - Abrir puertas
-  - Ataques
-  - Recibir daño
-  - Derrotar jefe
-  - Recoger objetos
-y por ahí ya de lo que e pensado
+# Cómo ejecutar el proyecto
+
+## Requisitos
+
+- CMake
+- Compilador compatible con C++17
+- SFML
+
+# Ejecutar en Windows, Linux y macOS
+
+cmake -B build 
+
+cmake --build build  
+
+./build/dungeon
+
