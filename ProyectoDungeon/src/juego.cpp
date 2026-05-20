@@ -170,6 +170,26 @@ juego::juego()
         250.f,
         10.f);
 
+    fondoBoss.setSize(
+        sf::Vector2f(200.f, 20.f));
+
+    fondoBoss.setFillColor(
+        sf::Color(80, 80, 80));
+
+    fondoBoss.setPosition(
+        250.f,
+        50.f);
+
+    barraBoss.setSize(
+        sf::Vector2f(200.f, 20.f));
+
+    barraBoss.setFillColor(
+        sf::Color::Red);
+
+    barraBoss.setPosition(
+        250.f,
+        50.f);
+
     estado = MENU;
 
     textoMenu.setFont(fuente1);
@@ -751,7 +771,13 @@ void juego::ejecutar()
         if(numeroSala == 3 && vidaJefe > 0) {
             textoBoss.setString(
                 "Vida Jefe: " + std::to_string(vidaJefe));
+
+            barraBoss.setSize(
+                sf::Vector2f(vidaJefe * 40.f,20.f));
+
             window.draw(textoBoss);
+            window.draw(fondoBoss);
+            window.draw(barraBoss);
         }
 
         window.display();
