@@ -1,5 +1,7 @@
 #include "../include/juego.h"
 #include <fstream>
+#include <cstdlib>
+#include <ctime>
 
 juego::juego()
     : window(
@@ -197,6 +199,8 @@ juego::juego()
     musica.setLoop(true);
     musica.setVolume(50.f);
     musica.play();
+
+    srand(time(NULL));
 }
 void juego::ejecutar()
 {
@@ -447,8 +451,15 @@ void juego::ejecutar()
                         nuevoY - player.getY());
                 }
             }
-        }
 
+            if(relojEnemigos.getElapsedTime().asSeconds() >= 1.f) {
+
+                moverEnemigos();
+
+                relojEnemigos.restart();
+            }
+
+    }
         window.clear();
 
         if (estado == MENU)
@@ -686,3 +697,51 @@ void juego::ejecutar()
         window.display();
     }
 }
+
+    void juego::moverEnemigos() {
+                
+                for(int i = 0; i < 10; i++) {
+
+                    for(int j = 0; j < 10; j++) {
+                        
+                        char celda = sala.getCelda(i, j);
+
+                        if(celda == 'E' || celda == 'O' || celda == 'X' || celda == 'Z') {
+                            
+                            int direccion = rand() % 4;
+
+                            int nuevoX = j;
+                            int nuevoY = i;
+
+                            if(direccion == 0) {
+
+                                nuevoY--;
+                            }
+
+                            else if(direccion == 1) {
+
+                                nuevoY++;
+                            }
+
+                            else if(direccion == 2) {
+
+                                nuevoX--;
+                            }
+
+                            else if(direccion == 3) {
+
+                                nuevoX++;
+                            }
+
+                            if(nuevoX >= 0 && nuevoX < 10 && nuevoY >= 0 && nuevoY < 10) {
+
+                                if(sala.getCelda(nuevoY, nuevoX) == '.') {
+
+                                    sala.setCelda(nuevoY, nuevoX, celda);
+                                    sala.setCelda(i, j, '.');
+                                }
+                        }
+                    }
+                }
+            }
+        }
