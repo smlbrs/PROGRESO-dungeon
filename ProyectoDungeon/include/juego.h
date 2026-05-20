@@ -76,6 +76,10 @@ private:
 
     sf::Font fuente1;
 
+    sf::Texture texturaPrincess;
+
+    sf::Sprite princessSprite;
+
     enum EstadoJuego
     {
 
@@ -106,6 +110,8 @@ public:
     void ejecutar();
 
     void moverEnemigos();
+
+    void moverJefe();
 };
 
 #endif

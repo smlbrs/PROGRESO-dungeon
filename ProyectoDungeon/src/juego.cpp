@@ -122,6 +122,16 @@ juego::juego()
         1.f,
         1.f);
 
+    texturaPrincess.loadFromFile(
+        "assets/princess.png");
+
+    princessSprite.setTexture(
+        texturaPrincess);
+
+    princessSprite.setScale(
+        1.f,
+        1.f);
+
     fuente.loadFromFile(
         "assets/fonts/arial.ttf");
 
@@ -468,6 +478,7 @@ void juego::ejecutar()
             {
 
                 moverEnemigos();
+                moverJefe();
 
                 relojEnemigos.restart();
             }
@@ -685,7 +696,17 @@ void juego::ejecutar()
                 {
 
                     bloque.setFillColor(
-                        sf::Color::Yellow);
+                        sf::Color(50, 50, 50));
+
+                    window.draw(bloque);
+
+                    princessSprite.setPosition(
+                        j * 50.f,
+                        i * 50.f);
+
+                    window.draw(princessSprite);
+
+                    continue;
                 }
 
                 else
@@ -773,4 +794,63 @@ void juego::moverEnemigos()
             }
         }
     }
+}
+
+void juego::moverJefe() {
+
+        int jefeX = -1;
+        int jefeY = -1;
+
+    for (int i = 0; i < 10; i++) {
+
+        for (int j = 0; j < 10; j++) {
+
+            if ( sala.getCelda(i, j) == 'J') {
+
+                jefeX = j;
+                jefeY = i;
+            }
+        }
+    }
+            if (jefeX == -1) {
+
+                return;
+            }
+
+                int nuevoX = jefeX;
+                int nuevoY = jefeY;
+
+                if (player.getX() < jefeX) {
+                    nuevoX--;
+                }
+                else if (player.getX() > jefeX) {
+                    nuevoX++;
+                }
+
+                if (player.getY() < jefeY) {
+                    nuevoY--;
+                }
+                else if (player.getY() > jefeY) {
+                    nuevoY++;
+                }
+
+                if (nuevoX >= 0 && nuevoX < 10 && nuevoY >= 0 && nuevoY < 10) {
+
+                    char destino = sala.getCelda(nuevoY, nuevoX);
+
+                    if (destino == '.') {
+
+                        sala.setCelda(nuevoY, nuevoX, 'J');
+                        sala.setCelda(jefeY, jefeX, '.');
+                    }
+                    if(nuevoX == player.getX() && nuevoY == player.getY()) {
+
+                        player.perderVida();
+
+                        if(player.getVidas() <= 0) {
+
+                            estado = GAMEOVER;
+                        }
+                    }
+                }
 }
