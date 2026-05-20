@@ -11,6 +11,7 @@ juego::juego()
 {
 
     numeroSala = 1;
+    vidaJefe = 5;
 
     texturaJugador.loadFromFile(
         "assets/player.png");
@@ -455,13 +456,6 @@ void juego::ejecutar()
 
                             estado = GAMEOVER;
                         }
-
-                        player.sumarPuntos(100);
-
-                        sala.setCelda(
-                            nuevoY,
-                            nuevoX,
-                            'R');
                     }
 
                     if (celda == 'R')
@@ -898,8 +892,11 @@ void juego::atacar() {
     }
 
     if(celda == 'J') {
+        vidaJefe--;
 
-        sala.setCelda(ataqueY, ataqueX, 'R');
-        player.sumarPuntos(500);
+        if(vidaJefe <= 0) {
+            sala.setCelda(ataqueY, ataqueX, 'R');
+            player.sumarPuntos(500);
+        }
     }
 }

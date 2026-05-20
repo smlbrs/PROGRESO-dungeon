@@ -104,6 +104,8 @@ private:
 
     sf::Clock relojEnemigos;
 
+    int vidaJefe;
+
 public:
     juego();
 
