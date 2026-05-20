@@ -19,6 +19,13 @@ juego::juego()
     jugadorSprite.setTexture(
         texturaJugador);
 
+    jugadorSprite.setTextureRect(
+        sf::IntRect(
+            0,
+            0,
+            60,
+            64));
+
     jugadorSprite.setScale(
         1.f,
         1.f);
@@ -209,7 +216,7 @@ juego::juego()
     textoGameOver.setFont(fuente1);
 
     textoGameOver.setCharacterSize(40);
-        
+
     textoGameOver.setFillColor(
         sf::Color::Red);
 
@@ -233,6 +240,24 @@ juego::juego()
     textoVictoria.setPosition(
         150.f,
         200.f);
+
+    attackBuffer.loadFromFile(
+        "assets/music/attack.wav");
+
+    attackSound.setBuffer(
+        attackBuffer);
+
+    damageBuffer.loadFromFile(
+        "assets/music/damage.wav");
+
+    damageSound.setBuffer(
+        damageBuffer);
+
+    victoryBuffer.loadFromFile(
+        "assets/music/victory.wav");
+
+    victorySound.setBuffer(
+        victoryBuffer);
 
     musica.openFromFile(
         "assets/music/music.ogg");
@@ -263,11 +288,13 @@ void juego::ejecutar()
             if (event.type == sf::Event::KeyPressed)
             {
 
-                if (event.key.code == sf::Keyboard::Space){
+                if (event.key.code == sf::Keyboard::Space)
+                {
                     atacar();
                 }
 
-                if(event.key.code == sf::Keyboard::Escape) {
+                if (event.key.code == sf::Keyboard::Escape)
+                {
                     window.close();
                 }
 
@@ -301,9 +328,9 @@ void juego::ejecutar()
 
                     jugadorSprite.setTextureRect(
                         sf::IntRect(
+                            130,
                             0,
-                            0,
-                            64,
+                            60,
                             64));
                 }
 
@@ -457,6 +484,7 @@ void juego::ejecutar()
                     {
 
                         player.perderVida();
+                        damageSound.play();
 
                         if (
                             player.getVidas() <= 0)
@@ -479,6 +507,7 @@ void juego::ejecutar()
                         player.perderVida();
                         player.perderVida();
                         player.perderVida();
+                        damageSound.play();
 
                         if (
                             player.getVidas() <= 0)
@@ -499,6 +528,7 @@ void juego::ejecutar()
 
                         archivo.close();
 
+                        victorySound.play();
                         estado = VICTORIA;
                     }
 
@@ -768,12 +798,13 @@ void juego::ejecutar()
         window.draw(textoVidas);
         window.draw(textoPuntos);
 
-        if(numeroSala == 3 && vidaJefe > 0) {
+        if (numeroSala == 3 && vidaJefe > 0)
+        {
             textoBoss.setString(
                 "Vida Jefe: " + std::to_string(vidaJefe));
 
             barraBoss.setSize(
-                sf::Vector2f(vidaJefe * 40.f,20.f));
+                sf::Vector2f(vidaJefe * 40.f, 20.f));
 
             window.draw(textoBoss);
             window.draw(fondoBoss);
@@ -842,109 +873,134 @@ void juego::moverEnemigos()
     }
 }
 
-void juego::moverJefe() {
+void juego::moverJefe()
+{
 
-        int jefeX = -1;
-        int jefeY = -1;
+    int jefeX = -1;
+    int jefeY = -1;
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; i++)
+    {
 
-        for (int j = 0; j < 10; j++) {
+        for (int j = 0; j < 10; j++)
+        {
 
-            if ( sala.getCelda(i, j) == 'J') {
+            if (sala.getCelda(i, j) == 'J')
+            {
 
                 jefeX = j;
                 jefeY = i;
             }
         }
     }
-            if (jefeX == -1) {
+    if (jefeX == -1)
+    {
 
-                return;
+        return;
+    }
+
+    int nuevoX = jefeX;
+    int nuevoY = jefeY;
+
+    if (player.getX() < jefeX)
+    {
+        nuevoX--;
+    }
+    else if (player.getX() > jefeX)
+    {
+        nuevoX++;
+    }
+
+    if (player.getY() < jefeY)
+    {
+        nuevoY--;
+    }
+    else if (player.getY() > jefeY)
+    {
+        nuevoY++;
+    }
+
+    if (nuevoX >= 0 && nuevoX < 10 && nuevoY >= 0 && nuevoY < 10)
+    {
+
+        char destino = sala.getCelda(nuevoY, nuevoX);
+
+        if (destino == '.')
+        {
+
+            sala.setCelda(nuevoY, nuevoX, 'J');
+            sala.setCelda(jefeY, jefeX, '.');
+        }
+        if (nuevoX == player.getX() && nuevoY == player.getY())
+        {
+
+            player.perderVida();
+            damageSound.play();
+
+            if (player.getVidas() <= 0)
+            {
+
+                estado = GAMEOVER;
             }
-
-                int nuevoX = jefeX;
-                int nuevoY = jefeY;
-
-                if (player.getX() < jefeX) {
-                    nuevoX--;
-                }
-                else if (player.getX() > jefeX) {
-                    nuevoX++;
-                }
-
-                if (player.getY() < jefeY) {
-                    nuevoY--;
-                }
-                else if (player.getY() > jefeY) {
-                    nuevoY++;
-                }
-
-                if (nuevoX >= 0 && nuevoX < 10 && nuevoY >= 0 && nuevoY < 10) {
-
-                    char destino = sala.getCelda(nuevoY, nuevoX);
-
-                    if (destino == '.') {
-
-                        sala.setCelda(nuevoY, nuevoX, 'J');
-                        sala.setCelda(jefeY, jefeX, '.');
-                    }
-                    if(nuevoX == player.getX() && nuevoY == player.getY()) {
-
-                        player.perderVida();
-
-                        if(player.getVidas() <= 0) {
-
-                            estado = GAMEOVER;
-                        }
-                    }
-                }
+        }
+    }
 }
 
-void juego::atacar() {
+void juego::atacar()
+{
+
+    if (attackClock.getElapsedTime().asSeconds() < 0.5f)
+    {
+        return;
+    }
+
+    attackClock.restart();
+    attackSound.play();
 
     int ataqueX = player.getX();
     int ataqueY = player.getY();
 
     char direccion = player.getDireccion();
 
-    if(direccion == 'w') {
+    if (direccion == 'w')
+    {
         ataqueY--;
     }
-    else if(direccion == 's') {
+    else if (direccion == 's')
+    {
         ataqueY++;
     }
-    else if(direccion == 'a') {
+    else if (direccion == 'a')
+    {
         ataqueX--;
     }
-    else if(direccion == 'd') {
+    else if (direccion == 'd')
+    {
         ataqueX++;
     }
 
-    if(ataqueX < 0 || ataqueX >= 10 || ataqueY < 0 || ataqueY >= 10) {
+    if (ataqueX < 0 || ataqueX >= 10 || ataqueY < 0 || ataqueY >= 10)
+    {
         return;
     }
 
     char celda = sala.getCelda(ataqueY, ataqueX);
 
-    if(celda == 'E' || celda == 'O' || celda == 'X' || celda == 'Z') {
+    if (celda == 'E' || celda == 'O' || celda == 'X' || celda == 'Z')
+    {
 
         sala.setCelda(ataqueY, ataqueX, '.');
         player.sumarPuntos(50);
     }
 
-    if(celda == 'J') {
+    if (celda == 'J')
+    {
         vidaJefe--;
 
-        if(vidaJefe <= 0) {
+        if (vidaJefe <= 0)
+        {
             sala.setCelda(ataqueY, ataqueX, 'R');
             player.sumarPuntos(500);
         }
     }
-
-    if(attackClock.getElapsedTime().asSeconds() >= 0.5f) {
-        return;
-    }
-
-    attackClock.restart();
 }

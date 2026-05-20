@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <SFML/Audio.hpp>
 
 #include "jugador.h"
 #include "sala.h"
@@ -113,6 +114,20 @@ private:
     sf::RectangleShape fondoBoss;
 
     sf::Clock attackClock;
+
+    sf::SoundBuffer attackBuffer;
+
+    sf::Sound attackSound;
+
+    sf::SoundBuffer damageBuffer;
+
+    sf::Sound damageSound;
+
+    sf::SoundBuffer victoryBuffer;
+
+    sf::Sound victorySound;
+
+
 
 public:
     juego();
