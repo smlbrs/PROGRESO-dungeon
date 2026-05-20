@@ -42,7 +42,7 @@ El personaje utiliza múltiples direcciones visuales dentro de una misma imagen.
 
 ## Música integrada
 
-Se implementó música de fondo utilizando sf::Music.
+Se implementó música de fondo utilizando sf::Music y efectos de sonido con sf::SoundBuffer y sf::Sound
 
 ## Interfaz visual
 
