@@ -2,6 +2,7 @@
 #define JUEGO_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include "jugador.h"
 #include "sala.h"
@@ -94,6 +95,8 @@ private:
     sf::Text textoGameOver;
 
     sf::Text textoVictoria;
+
+    sf::Music musica;
 
 public:
     juego();

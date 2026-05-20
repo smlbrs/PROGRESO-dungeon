@@ -185,11 +185,18 @@ juego::juego()
         sf::Color::Green);
 
     textoVictoria.setString(
-        "VICTORIA\nESC para salir");
+        "RESCATASTE A LA PRINCESA\nESC para salir");
 
     textoVictoria.setPosition(
         150.f,
         200.f);
+
+    musica.openFromFile(
+        "assets/music/music.ogg");
+
+    musica.setLoop(true);
+    musica.setVolume(50.f);
+    musica.play();
 }
 void juego::ejecutar()
 {
